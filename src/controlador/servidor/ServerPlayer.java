@@ -39,12 +39,4 @@ public class ServerPlayer extends Player {
         output.writeBoolean(b);
     }
 
-    public Board askBoard() {
-        return input.readBoard();
-    }
-
-    public void sendBoard(Board b) {
-        output.writeBoard(b);
-    }
-
 }

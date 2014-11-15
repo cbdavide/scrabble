@@ -39,10 +39,10 @@ public class ClientWindowTest {
         board.addBoxes();
         //Players part 
         PlayerInfoGroupPanel players = new PlayerInfoGroupPanel();
-        players.addPlayer(new PlayerInfoPanel("David"));
-        players.addPlayer(new PlayerInfoPanel("Esteban"));
-        players.addPlayer(new PlayerInfoPanel("Castelblanco"));
-        players.addPlayer(new PlayerInfoPanel("Benavides"));
+        players.addPlayer(new PlayerInfoPanel("David",10));
+        players.addPlayer(new PlayerInfoPanel("Esteban",20));
+        players.addPlayer(new PlayerInfoPanel("Castelblanco",100));
+        players.addPlayer(new PlayerInfoPanel("Benavides",200));
         players.buildPanel();
 
         LettersGroup lg = new ESLettersGroup();

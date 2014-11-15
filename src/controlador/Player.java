@@ -5,6 +5,9 @@
  */
 package controlador;
 
+import vista.board.Board;
+import vista.playerInfo.PlayerInfoGroupPanel;
+
 /**
  *
  * @author david
@@ -82,6 +85,22 @@ public abstract class Player {
 
     public boolean readBoolean() {
         return input.readBoolean();
+    }
+
+    public PlayerInfoGroupPanel readPlayersInfo() {
+        return input.readPlayersInfo();
+    }
+
+    public void sendPlayersInfo(PlayerInfoGroupPanel playersInfo) {
+        output.writePlayersInfo(playersInfo);
+    }
+
+    public Board askBoard() {
+        return input.readBoard();
+    }
+
+    public void sendBoard(Board b) {
+        output.writeBoard(b);
     }
 
     private void createIO() {

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import controlador.Hand;
 import controlador.Letter;
 import vista.ListenerLetraBoard;
-import controlador.cliente.ClientPlayer;
 import vista.letras.GraficLetter;
 import vista.playerInfo.PlayerInfoGroupPanel;
 import vista.playerInfo.PlayerInfoPanel;
@@ -26,12 +25,14 @@ public class Control {
 
     private final Partida partida;
     private ClientWindow window;
+    private final ClientPlayer player;
 
     public Control() {
         //Pedir Nombre 
-        partida = new Partida("Felipe");
+        partida = new Partida("David");
         partida.initiationProtocol();
-        window = new ClientWindow(buildBoard(), buildPlayers(), buildHand());
+        player = partida.getPlayer();
+        window = new ClientWindow(partida.getBoard(), partida.getPlayersInfo(), buildHand());
         window.getContentPane().setBackground(new Color(153, 51, 51));
         window.buildFrame();
         window.pack();
@@ -53,20 +54,6 @@ public class Control {
         panel.addLetters();
         return panel;
 
-    }
-
-    private Board buildBoard() {
-        return partida.getPlayer().getBoard();
-    }
-
-    private PlayerInfoGroupPanel buildPlayers() {
-        PlayerInfoGroupPanel panelPlayers = new PlayerInfoGroupPanel();
-        panelPlayers.addPlayer(new PlayerInfoPanel(partida.getPlayer().getName()));
-        for (PlayerInfoPanel panel : partida.getPlayers()) {
-            panelPlayers.addPlayer(panel);
-        }
-        panelPlayers.buildPanel();
-        return panelPlayers;
     }
 
     public static void main(String[] args) {

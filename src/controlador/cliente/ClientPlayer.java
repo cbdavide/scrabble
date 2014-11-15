@@ -16,7 +16,6 @@ import vista.board.Board;
  */
 public class ClientPlayer extends Player {
 
-    private Board board;
     
     public ClientPlayer(PlayerComunications pc) {
         super(pc);
@@ -48,18 +47,6 @@ public class ClientPlayer extends Player {
 
     public boolean getResponse() {
         return input.readBoolean();
-    }
-    
-    public Board getBoard(){
-        return this.board;
-    }
-    
-    public void askBoard(){
-        this.board = input.readBoard();
-    }
-    
-    public void sendBoard(){
-        output.writeBoard(board);
     }
     
 }

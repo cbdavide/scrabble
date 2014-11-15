@@ -6,6 +6,7 @@
 
 package test;
 
+import controlador.PlayersInfoManager;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
 import vista.playerInfo.PlayerInfoGroupPanel;
@@ -23,19 +24,16 @@ public class PlayerInfoPanelTest {
         frame.setLayout(new GridLayout());
         frame.setTitle("PlayerInfoTest");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        PlayerInfoPanel panel = new PlayerInfoPanel("David");
-        //panel.setPoints(100);
-        PlayerInfoPanel panel2 = new PlayerInfoPanel("Esteban");
-        panel.setPoints(50);
-        PlayerInfoGroupPanel panelCompuesto = new PlayerInfoGroupPanel();
-        panelCompuesto.addPlayer(panel);
-        panelCompuesto.addPlayer(panel2);
-        panelCompuesto.buildPanel();
-        frame.add(panelCompuesto);
-        panelCompuesto.setPlayerInfoPanel(1, true);
-        
+        PlayersInfoManager playersInfo = new PlayersInfoManager();
+        playersInfo.addPlayer("David", 10);
+        playersInfo.addPlayer("Felipe", 10);
+        playersInfo.addPlayer("Anthony", 20);
+        playersInfo.buildPanel();
+        frame.add(playersInfo.getPlayersInfo());        
         frame.pack();
         frame.setVisible(true);
+        playersInfo.getPlayerInfo(0).setState(true);
+        playersInfo.getPlayerInfo(0).setPoints(100);
     }
     
 }

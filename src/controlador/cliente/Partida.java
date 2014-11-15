@@ -6,7 +6,8 @@
 package controlador.cliente;
 
 import java.util.ArrayList;
-import controlador.cliente.ClientPlayer;
+import vista.board.Board;
+import vista.playerInfo.PlayerInfoGroupPanel;
 import vista.playerInfo.PlayerInfoPanel;
 
 /**
@@ -18,24 +19,34 @@ public class Partida {
     private final Cliente cliente;
     private final ClientPlayer player;
     
+    private Board board;
+    private PlayerInfoGroupPanel playersInfo;
+    
     //Juagdor conectado
     private boolean stillOn;
     
     //Jugada
     private boolean isMoving;
-    
-    private final ArrayList<PlayerInfoPanel> players;
+
 
     public Partida(String name) {
         cliente = new Cliente();
         player = new ClientPlayer(cliente.getComunications());
         player.setName(name);
         player.setPoint(0);
-        players = new ArrayList<>();
         this.stillOn = true;
         this.isMoving = true;
     }
     
+    public PlayerInfoGroupPanel getPlayersInfo(){
+        return this.playersInfo;
+    }
+    
+    public Board getBoard(){
+        return this.board;
+    }
+    
+    //Va en la parte del jugador
     public void endMove(){
         this.isMoving = false;
     }
@@ -44,10 +55,6 @@ public class Partida {
         this.stillOn = false;
     }
     
-    public ArrayList<PlayerInfoPanel> getPlayers(){
-        return this.players;
-    }
-
     public ClientPlayer getPlayer() {
         return this.player;
     }
@@ -55,8 +62,8 @@ public class Partida {
     public void initiationProtocol() {
         player.sendName();
         player.sendPoint();
-        readPlayersNames();
-        player.askBoard();
+        this.playersInfo = player.readPlayersInfo();
+        this.board = player.askBoard();
         refreshHand();
     }
     
@@ -82,7 +89,7 @@ public class Partida {
                     }
                 }
                 //Enviar Board actualizada
-                player.sendBoard();
+                player.sendBoard(this.board);
                 
             }
             
@@ -93,25 +100,6 @@ public class Partida {
     public void refreshHand() {
         player.sendHand();
         player.askHand();
-    }
-
-    private void readPlayersNames() {
-        String str;
-        int i;
-        boolean cond = true;
-        while (cond) {
-
-            str = player.readString();
-            i = player.readInt();
-
-            cond = !str.equals("empty") && i != -1000;
-
-            if (cond) {
-                PlayerInfoPanel tem_player = new PlayerInfoPanel(str);
-                tem_player.setPoints(i);
-                players.add(tem_player);
-            }
-        }
     }
 
 }

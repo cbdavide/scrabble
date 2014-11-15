@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import vista.Consola;
 import vista.board.Board;
+import vista.playerInfo.PlayerInfoGroupPanel;
 
 /**
  *
@@ -76,20 +77,29 @@ public class Output {
             Consola.consola("Problema al enviar int");
         }
     }
+    
+    public void writePlayersInfo(PlayerInfoGroupPanel playersInfo){
+        try{
+            oos.writeObject(playersInfo);
+            oos.flush();
+        }catch(IOException ex){
+            Consola.consola("Problema al enviar PlayersInfo");
+        }
+    }
+    
+    public void close() {
+        try {
+            oos.close();
+        } catch (IOException ex) {
+            Consola.consola("Problema al cerrar ¬¬");
+        }
+    }
 
     private void createOutput(OutputStream os) {
         try {
             oos = new ObjectOutputStream(os);
         } catch (IOException ex) {
             Consola.consola("Output problem ¬¬");
-        }
-    }
-
-    public void close() {
-        try {
-            oos.close();
-        } catch (IOException ex) {
-            Consola.consola("Problema al cerrar ¬¬");
         }
     }
 }

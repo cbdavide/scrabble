@@ -12,7 +12,7 @@ import controlador.LettersGroup;
 import modelo.Diccionario;
 import controlador.Verificador;
 import controlador.PlayerComunications;
-import vista.playerInfo.PlayerInfoGroupPanel;
+import controlador.PlayersInfoManager;
 import vista.board.Board;
 
 /**
@@ -27,7 +27,7 @@ public class Game {
     private Board board;
     private final LettersGroup lettersGroup;
     private final Dealer dealer;
-
+    private final PlayersInfoManager playersInfo;
     private final Verificador verificador;
 
     private boolean gameStillOn;
@@ -41,6 +41,7 @@ public class Game {
         this.dealer = new Dealer(lg);
         this.board = board;
         this.verificador = new Verificador(diccionario);
+        playersInfo = new PlayersInfoManager();
         gameStillOn = true;
     }
     
@@ -68,7 +69,8 @@ public class Game {
 
     public void initiationProtocol() {
         askNP();
-        sendNP();
+        buildPlayersInfo();
+        sendPlayersInfo();
         sendBoard();
         sendFirstHand();
     }
@@ -130,20 +132,17 @@ public class Game {
             p.askPoint();
         }
     }
+    
+    private void buildPlayersInfo(){
+        for(ServerPlayer p : players){
+            playersInfo.addPlayer(p.getName(), p.getPoint());
+        }
+        playersInfo.buildPanel();
+    }
 
-    private void sendNP() {
-        for (ServerPlayer p : players) {
-
-            for (ServerPlayer p2 : players) {
-
-                if (p != p2) {
-                    //Send PanelInfoPlayers
-                    p.sendString(p2.getName());
-                    p.sendInt(p2.getPoint());
-                }
-            }
-            p.sendString("empty");
-            p.sendInt(-1000);
+    private void sendPlayersInfo() {
+        for(ServerPlayer p : players){
+            p.sendPlayersInfo(playersInfo.getPlayersInfo());
         }
     }
 

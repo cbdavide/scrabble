@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import vista.Consola;
 import vista.board.Board;
+import vista.playerInfo.PlayerInfoGroupPanel;
 
 /**
  *
@@ -21,14 +22,6 @@ public class Input {
 
     public Input(InputStream is) {
         createInput(is);
-    }
-
-    private void createInput(InputStream is) {
-        try {
-            ois = new ObjectInputStream(is);
-        } catch (IOException ex) {
-            Consola.consola("Problema al crear InputStream");
-        }
     }
 
     public String readString() {
@@ -94,11 +87,31 @@ public class Input {
         }
     }
 
+    public PlayerInfoGroupPanel readPlayersInfo() {
+        try {
+            return (PlayerInfoGroupPanel) ois.readObject();
+        } catch (IOException ex) {
+            Consola.consola("Trouble readind playersInfo!");
+            return null;
+        } catch (ClassNotFoundException ex) {
+            Consola.consola("Class not found ¬¬");
+            return null;
+        }
+    }
+
     public void close() {
         try {
             ois.close();
         } catch (IOException ex) {
             Consola.consola("Problema al cerrar ¬¬");
+        }
+    }
+
+    private void createInput(InputStream is) {
+        try {
+            ois = new ObjectInputStream(is);
+        } catch (IOException ex) {
+            Consola.consola("Problema al crear InputStream");
         }
     }
 
