@@ -105,7 +105,7 @@ public class Game {
 
         }
     }
-
+    //Mescla los jugadores aleatoriamente
     private ArrayList<PlayerComunications> shufflePlayers() {
         ArrayList<PlayerComunications> comunications = server.getPLayers();
         Collections.shuffle(comunications);

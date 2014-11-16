@@ -12,6 +12,7 @@ import controlador.ESLettersGroup;
 import controlador.Hand;
 import controlador.Letter;
 import controlador.LettersGroup;
+import vista.ListenerLetraBoard;
 import vista.letras.GraficLetter;
 import vista.playerInfo.PlayerInfoGroupPanel;
 import vista.playerInfo.PlayerInfoPanel;
@@ -49,14 +50,9 @@ public class ClientWindowTest {
         Dealer ganstaDealer = new Dealer(lg);
         Hand h1 = new Hand();
         ganstaDealer.fillHand(h1);
-        ArrayList<GraficLetter> graficLetters = new ArrayList<>();
-        for (Letter l : h1.getetters()) {
-            GraficLetter temp = new GraficLetter(l);
-            temp.paintClientLetter();
-            graficLetters.add(temp);
-        }
-        PanelHand graficHand = new PanelHand();
-        graficHand.setLetters(graficLetters);
+        ListenerLetraBoard lb = new ListenerLetraBoard();
+        PanelHand graficHand = new PanelHand(lb);
+        graficHand.setHand(h1);
         graficHand.addLetters();
         
         ClientWindow window = new ClientWindow(board, players,graficHand);

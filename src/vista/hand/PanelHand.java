@@ -5,6 +5,8 @@
  */
 package vista.hand;
 
+import controlador.Hand;
+import controlador.Letter;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -15,6 +17,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import vista.letras.GraficLetter;
 import modelo.ImageLoader;
+import vista.ListenerLetraBoard;
 
 /**
  *
@@ -22,43 +25,70 @@ import modelo.ImageLoader;
  */
 public class PanelHand extends JPanel {
 
+    private Hand hand;
     private ArrayList<GraficLetter> letters;
-    
+
     private JButton send;
 
     private GridBagLayout layout;
     private GridBagConstraints gbc;
 
-    public PanelHand() {
+    private final ListenerLetraBoard listenerLetraBoard;
+
+    public PanelHand(ListenerLetraBoard listenerLetra) {
+        this.listenerLetraBoard = listenerLetra;
         configLayout();
         configButton();
     }
-    
-    private void configButton(){
-        ImageLoader imgLoader = new ImageLoader();
-        send = new JButton();
-        send.setIcon(new ImageIcon(imgLoader.loadImage("/img/cheack.png")));
-        send.setPreferredSize(new Dimension(40,45));
+
+    public Hand getLetters() {
+        return this.hand;
     }
 
-    public ArrayList<GraficLetter> getLetters() {
-        return this.letters;
-    }
-
-    public void setLetters(ArrayList<GraficLetter> leters) {
-        this.letters = leters;
+    public void setHand(Hand h) {
+        this.hand = h;
     }
     
+    public void addGraficLetterListener(){
+        for(GraficLetter l : letters){
+            l.addMouseAdapter(listenerLetraBoard);
+        }
+    }
+    
+    public void removeLetterListener(){
+        for(GraficLetter l : letters){
+            l.removeMouseAdapter(listenerLetraBoard);
+        }
+    }
+
     public void addLetters() {
         removeAll();
+        updateGraficLetters();
         int i = 0;
         for (GraficLetter l : letters) {
             addComponent(i, 0, 1, 1, GridBagConstraints.BOTH, 1.0, 1.0, l);
             i++;
         }
-        //gbc.ipadx = 0;
-        addComponent(i,0,1,1,GridBagConstraints.NONE,1.0,1.0,send);
+        addComponent(i, 0, 1, 1, GridBagConstraints.NONE, 1.0, 1.0, send);
         updateUI();
+    }
+
+    private void configButton() {
+        ImageLoader imgLoader = new ImageLoader();
+        send = new JButton();
+        send.setIcon(new ImageIcon(imgLoader.loadImage("/img/cheack.png")));
+        send.setPreferredSize(new Dimension(40, 45));
+        letters = new ArrayList<>();
+    }
+
+    private void updateGraficLetters() {
+        letters = new ArrayList<>();
+        for (Letter l : hand.getetters()) {
+            GraficLetter temp = new GraficLetter(l);
+            temp.paintClientLetter();
+            letters.add(temp);
+
+        }
     }
 
     private void addComponent(int x, int y, int w, int h, int fill,

@@ -9,8 +9,6 @@ package test;
 import controlador.PlayersInfoManager;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
-import vista.playerInfo.PlayerInfoGroupPanel;
-import vista.playerInfo.PlayerInfoPanel;
 
 /**
  *

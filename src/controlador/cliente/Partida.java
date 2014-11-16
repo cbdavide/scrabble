@@ -5,10 +5,8 @@
  */
 package controlador.cliente;
 
-import java.util.ArrayList;
 import vista.board.Board;
 import vista.playerInfo.PlayerInfoGroupPanel;
-import vista.playerInfo.PlayerInfoPanel;
 
 /**
  *

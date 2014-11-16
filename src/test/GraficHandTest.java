@@ -12,6 +12,7 @@ import controlador.ESLettersGroup;
 import controlador.Hand;
 import controlador.Letter;
 import controlador.LettersGroup;
+import vista.ListenerLetraBoard;
 import vista.letras.GraficLetter;
 import vista.hand.PanelHand;
 
@@ -30,17 +31,27 @@ public class GraficHandTest {
         Dealer ganstaDealer = new Dealer(lg);
         Hand h1 = new Hand();
         ganstaDealer.fillHand(h1);
-        ArrayList<GraficLetter> graficLetters = new ArrayList<>();
-        for (Letter l : h1.getetters()) {
-            GraficLetter temp = new GraficLetter(l);
-            temp.paintClientLetter();
-            graficLetters.add(temp);
+        Hand h2 = new Hand();
+        ganstaDealer.fillHand(h2);
+        System.out.println("H1");
+        for(Letter l : h1.getetters()){
+            System.out.print(l.getSymbol());
         }
-        PanelHand graficHand = new PanelHand();
-        graficHand.setLetters(graficLetters);
+        System.out.println("");
+        System.out.println("H2");
+        for(Letter l : h2.getetters()){
+            System.out.print(l.getSymbol());
+        }
+        System.out.println("");
+        ListenerLetraBoard lb = new ListenerLetraBoard();
+        PanelHand graficHand = new PanelHand(lb);
+        graficHand.setHand(h1);
         graficHand.addLetters();
         frame.add(graficHand);
         frame.pack();        
         frame.setVisible(true);
+        graficHand.setHand(h2);
+        graficHand.addLetters();
+        graficHand.addGraficLetterListener();
     }
 }

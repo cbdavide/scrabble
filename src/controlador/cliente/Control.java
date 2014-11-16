@@ -11,9 +11,6 @@ import controlador.Hand;
 import controlador.Letter;
 import vista.ListenerLetraBoard;
 import vista.letras.GraficLetter;
-import vista.playerInfo.PlayerInfoGroupPanel;
-import vista.playerInfo.PlayerInfoPanel;
-import vista.board.Board;
 import vista.hand.PanelHand;
 import vista.window.ClientWindow;
 
@@ -24,11 +21,14 @@ import vista.window.ClientWindow;
 public class Control {
 
     private final Partida partida;
-    private ClientWindow window;
+    private final ClientWindow window;
     private final ClientPlayer player;
-
+    
+    private final ListenerLetraBoard listenerLetraBoard;
+    
     public Control() {
         //Pedir Nombre 
+        listenerLetraBoard = new ListenerLetraBoard();
         partida = new Partida("David");
         partida.initiationProtocol();
         player = partida.getPlayer();
@@ -40,17 +40,10 @@ public class Control {
     }
 
     private PanelHand buildHand() {
-        PanelHand panel = new PanelHand();
-        ClientPlayer player = partida.getPlayer();
-        Hand h = player.getHand();
-        ArrayList<GraficLetter> letras = new ArrayList<>();
-        for (Letter l : h.getetters()) {
-            GraficLetter temp = new GraficLetter(l);
-            temp.addMouseAdapter(new ListenerLetraBoard());
-            temp.paintClientLetter();
-            letras.add(temp);
-        }
-        panel.setLetters(letras);
+        PanelHand panel = new PanelHand(listenerLetraBoard);
+        ClientPlayer player_temp = partida.getPlayer();
+        Hand h = player_temp.getHand();
+        panel.setHand(h);
         panel.addLetters();
         return panel;
 
