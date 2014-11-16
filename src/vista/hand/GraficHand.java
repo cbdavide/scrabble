@@ -23,7 +23,7 @@ import vista.ListenerLetraBoard;
  *
  * @author david
  */
-public class PanelHand extends JPanel {
+public class GraficHand extends JPanel {
 
     private Hand hand;
     private ArrayList<GraficLetter> letters;
@@ -35,7 +35,7 @@ public class PanelHand extends JPanel {
 
     private final ListenerLetraBoard listenerLetraBoard;
 
-    public PanelHand(ListenerLetraBoard listenerLetra) {
+    public GraficHand(ListenerLetraBoard listenerLetra) {
         this.listenerLetraBoard = listenerLetra;
         configLayout();
         configButton();

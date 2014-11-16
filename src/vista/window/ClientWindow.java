@@ -12,7 +12,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import vista.playerInfo.PlayerInfoGroupPanel;
 import vista.board.Board;
-import vista.hand.PanelHand;
+import vista.hand.GraficHand;
 
 /**
  *
@@ -22,21 +22,22 @@ public class ClientWindow extends JFrame {
 
     private final Board board;
     private final PlayerInfoGroupPanel players;
-    private PanelHand panelHand;
+    private GraficHand panelHand;
 
     private GridBagLayout layout;
     private GridBagConstraints gbc;
 
-    public ClientWindow(Board b, PlayerInfoGroupPanel players,PanelHand hand) {
+    public ClientWindow(Board b, PlayerInfoGroupPanel players,GraficHand hand) {
         super("Screbble");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         configLayout();
         this.board = b;
         this.players = players;
         this.panelHand = hand;
+        this.setResizable(false);
     }
     
-    public void setPanelHand(PanelHand ph){
+    public void setPanelHand(GraficHand ph){
         this.panelHand = ph;
     }
 

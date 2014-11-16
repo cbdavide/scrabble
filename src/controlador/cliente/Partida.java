@@ -5,7 +5,9 @@
  */
 package controlador.cliente;
 
+import vista.ListenerLetraBoard;
 import vista.board.Board;
+import vista.hand.GraficHand;
 import vista.playerInfo.PlayerInfoGroupPanel;
 
 /**
@@ -19,6 +21,7 @@ public class Partida {
     
     private Board board;
     private PlayerInfoGroupPanel playersInfo;
+    private final GraficHand graficHand;
     
     //Juagdor conectado
     private boolean stillOn;
@@ -27,13 +30,23 @@ public class Partida {
     private boolean isMoving;
 
 
-    public Partida(String name) {
+    public Partida(String name, ListenerLetraBoard lb) {
         cliente = new Cliente();
         player = new ClientPlayer(cliente.getComunications());
         player.setName(name);
         player.setPoint(0);
+        graficHand = new GraficHand(lb);
         this.stillOn = true;
         this.isMoving = true;
+    }
+    
+    public GraficHand getGraficHand(){
+        return this.graficHand;
+    }
+    
+    public final void updateGraficHand(){
+        graficHand.setHand(player.getHand());
+        graficHand.addLetters();
     }
     
     public PlayerInfoGroupPanel getPlayersInfo(){
@@ -63,6 +76,7 @@ public class Partida {
         this.playersInfo = player.readPlayersInfo();
         this.board = player.askBoard();
         refreshHand();
+        updateGraficHand();
     }
     
     public void gameLoopProtocol(){
@@ -70,11 +84,13 @@ public class Partida {
         while(stillOn){
             
             boolean isMyTurn = player.readBoolean();
-            String choosenOne = player.readString();
-            //Iluminar casilla de el legido
+            int i = player.readInt();
+            //Ilumina casilla de el legido
+            playersInfo.setPlayerInfoState(i, true);
             
             if(isMyTurn){
                 //Añadir listener a la mano
+                graficHand.addGraficLetterListener();
                 //Añadir listener a la board
                 while(isMoving){
                     //La palabra se enviaria desde otra parte

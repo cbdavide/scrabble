@@ -35,7 +35,7 @@ public class InitiationProtocolServerTest {
         board.addBoxes();
         LettersGroup lg = new ESLettersGroup();
         //*******************************************************
-        int nJugadores = 2;
+        int nJugadores = 4;
         Game g = new Game(nJugadores, lg,board,diccionario);
         g.initiationProtocol();
         for (Letter l : lg.getLetters()) {
@@ -45,5 +45,6 @@ public class InitiationProtocolServerTest {
                 System.out.print("- ");
             }
         }
+        g.gameLoopProtocol();
     }
 }

@@ -72,7 +72,7 @@ public class Game {
         buildPlayersInfo();
         sendPlayersInfo();
         sendBoard();
-        sendFirstHand();
+        sendHand();
     }
 
     public void gameLoopProtocol() {
@@ -86,7 +86,7 @@ public class Game {
                 } else {
                     player.sendBoolean(false);
                 }
-                player.sendString(players.get(turn).getName());
+                player.sendInt(turn);
             }
             //Sera falsa cuando el jugador termine la jugada
             boolean cond_temp = true;
@@ -118,7 +118,7 @@ public class Game {
         }
     }
 
-    private void sendFirstHand() {
+    private void sendHand() {
         for (ServerPlayer p : players) {
             p.askHand();
             dealer.fillHand(p.getHand());

@@ -20,7 +20,7 @@ import vista.board.Board;
 import vista.board.BoardBuilder;
 import vista.board.BoardDirector;
 import vista.board.ClassicBoardBuilder;
-import vista.hand.PanelHand;
+import vista.hand.GraficHand;
 import vista.window.ClientWindow;
 
 /**
@@ -51,7 +51,7 @@ public class ClientWindowTest {
         Hand h1 = new Hand();
         ganstaDealer.fillHand(h1);
         ListenerLetraBoard lb = new ListenerLetraBoard();
-        PanelHand graficHand = new PanelHand(lb);
+        GraficHand graficHand = new GraficHand(lb);
         graficHand.setHand(h1);
         graficHand.addLetters();
         

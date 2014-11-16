@@ -31,6 +31,14 @@ public class PlayerInfoGroupPanel extends JPanel implements Serializable{
     public PlayerInfoPanel getPlayerInfo(int i){
         return players.get(i);
     }
+    
+    public void setPlayerInfoState (int i,boolean b){
+        players.get(i).setState(b);
+    }
+    
+    public void setPlayerInfoPoint(int i, int p){
+        players.get(i).setPoints(p);
+    }
 
     public void addPlayer(PlayerInfoPanel panel) {
         players.add(panel);

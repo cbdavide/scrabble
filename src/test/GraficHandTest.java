@@ -5,7 +5,6 @@
  */
 package test;
 
-import java.util.ArrayList;
 import javax.swing.JFrame;
 import controlador.Dealer;
 import controlador.ESLettersGroup;
@@ -13,8 +12,7 @@ import controlador.Hand;
 import controlador.Letter;
 import controlador.LettersGroup;
 import vista.ListenerLetraBoard;
-import vista.letras.GraficLetter;
-import vista.hand.PanelHand;
+import vista.hand.GraficHand;
 
 /**
  *
@@ -44,7 +42,7 @@ public class GraficHandTest {
         }
         System.out.println("");
         ListenerLetraBoard lb = new ListenerLetraBoard();
-        PanelHand graficHand = new PanelHand(lb);
+        GraficHand graficHand = new GraficHand(lb);
         graficHand.setHand(h1);
         graficHand.addLetters();
         frame.add(graficHand);

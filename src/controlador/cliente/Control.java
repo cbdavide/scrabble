@@ -6,12 +6,8 @@
 package controlador.cliente;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import controlador.Hand;
-import controlador.Letter;
 import vista.ListenerLetraBoard;
-import vista.letras.GraficLetter;
-import vista.hand.PanelHand;
+import vista.hand.GraficHand;
 import vista.window.ClientWindow;
 
 /**
@@ -29,7 +25,7 @@ public class Control {
     public Control() {
         //Pedir Nombre 
         listenerLetraBoard = new ListenerLetraBoard();
-        partida = new Partida("David");
+        partida = new Partida("Darryl", listenerLetraBoard);
         partida.initiationProtocol();
         player = partida.getPlayer();
         window = new ClientWindow(partida.getBoard(), partida.getPlayersInfo(), buildHand());
@@ -37,15 +33,11 @@ public class Control {
         window.buildFrame();
         window.pack();
         window.setVisible(true);
+        partida.gameLoopProtocol();
     }
 
-    private PanelHand buildHand() {
-        PanelHand panel = new PanelHand(listenerLetraBoard);
-        ClientPlayer player_temp = partida.getPlayer();
-        Hand h = player_temp.getHand();
-        panel.setHand(h);
-        panel.addLetters();
-        return panel;
+    private GraficHand buildHand() {
+        return partida.getGraficHand();
 
     }
 
