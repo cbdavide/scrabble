@@ -66,7 +66,7 @@ public class GraficHand extends JPanel {
         updateGraficLetters();
         int i = 0;
         for (GraficLetter l : letters) {
-            addComponent(i, 0, 1, 1, GridBagConstraints.BOTH, 1.0, 1.0, l);
+            addComponent(i, 0, 1, 1, GridBagConstraints.NONE, 1.0, 1.0, l);
             i++;
         }
         addComponent(i, 0, 1, 1, GridBagConstraints.NONE, 1.0, 1.0, send);
@@ -77,7 +77,7 @@ public class GraficHand extends JPanel {
         ImageLoader imgLoader = new ImageLoader();
         send = new JButton();
         send.setIcon(new ImageIcon(imgLoader.loadImage("/img/cheack.png")));
-        send.setPreferredSize(new Dimension(40, 45));
+        send.setPreferredSize(new Dimension(40, 40));
         letters = new ArrayList<>();
     }
 

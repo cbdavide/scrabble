@@ -28,6 +28,7 @@ public class GraficLettersGroupTest {
         frame.add(panel);
         panel.join();
         panel.addGrfLetters();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);         
     }

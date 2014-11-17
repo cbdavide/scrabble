@@ -16,6 +16,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import controlador.Letter;
+import java.awt.Dimension;
 import vista.ListenerLetraBoard;
 
 /**
@@ -40,11 +41,12 @@ public class GraficLetter extends JPanel {
 
     private GridBagLayout layout;
     private GridBagConstraints gbc;
-    
+
     private MouseAdapter mouseAdapter;
-    
+
     public GraficLetter(Letter l) {
         this.letter = l;
+        setPreferredSize(new Dimension(40, 40));
         //Fonts
         CHAR_FONT = new Font("Open Sans Extrabold", Font.BOLD, 18);
         POINT_FONT = new Font("SansSerif", Font.BOLD, 9);
@@ -56,16 +58,16 @@ public class GraficLetter extends JPanel {
         addComponents();
         setBorder(BorderFactory.createRaisedBevelBorder());
     }
-    
-    public void addMouseAdapter(ListenerLetraBoard listener){
+
+    public void addMouseAdapter(ListenerLetraBoard listener) {
         addMouseListener(listener);
     }
-    
-    public void removeMouseAdapter(ListenerLetraBoard listener){
+
+    public void removeMouseAdapter(ListenerLetraBoard listener) {
         removeMouseListener(listener);
     }
-    
-    public Letter getLetter(){
+
+    public Letter getLetter() {
         return this.letter;
     }
 
@@ -76,9 +78,9 @@ public class GraficLetter extends JPanel {
     }
 
     private void loadComponents() {
-        charLabel = new JLabel(letter.getSymbol());
+        charLabel = new JLabel(letter.getSymbol(), JLabel.CENTER);
         charLabel.setFont(CHAR_FONT);
-        pointLabel = new JLabel("" + letter.getValue());
+        pointLabel = new JLabel(String.valueOf(letter.getValue()), JLabel.RIGHT);
         pointLabel.setFont(POINT_FONT);
     }
 
@@ -109,9 +111,9 @@ public class GraficLetter extends JPanel {
     }
 
     private void addComponents() {
-        gbc.insets = new Insets(5, 15, 0, 5);
+        gbc.insets = new Insets(5, 4, 0, 4);
         addComponent(0, 0, 2, 1, GridBagConstraints.BOTH, 1.0, 1.0, charLabel);
-        gbc.insets = new Insets(0, 30, 0, 0);
+        gbc.insets = new Insets(-5, 10, 0, 5);
         addComponent(0, 2, 1, 1, GridBagConstraints.BOTH, 0.5, 0.5, pointLabel);
     }
 

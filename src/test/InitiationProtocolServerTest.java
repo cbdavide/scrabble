@@ -35,7 +35,7 @@ public class InitiationProtocolServerTest {
         board.addBoxes();
         LettersGroup lg = new ESLettersGroup();
         //*******************************************************
-        int nJugadores = 4;
+        int nJugadores = 2;
         Game g = new Game(nJugadores, lg,board,diccionario);
         g.initiationProtocol();
         for (Letter l : lg.getLetters()) {
