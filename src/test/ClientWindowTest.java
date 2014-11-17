@@ -10,7 +10,8 @@ import controlador.Dealer;
 import controlador.ESLettersGroup;
 import controlador.Hand;
 import controlador.LettersGroup;
-import vista.ListenerLetraBoard;
+import controlador.PlayBuffer;
+import vista.ListenerBotones;
 import vista.playerInfo.PlayerInfoGroupPanel;
 import vista.playerInfo.PlayerInfoPanel;
 import vista.board.Board;
@@ -37,22 +38,28 @@ public class ClientWindowTest {
         board.addBoxes();
         //Players part 
         PlayerInfoGroupPanel players = new PlayerInfoGroupPanel();
-        players.addPlayer(new PlayerInfoPanel("David",10));
-        players.addPlayer(new PlayerInfoPanel("Esteban",20));
-        players.addPlayer(new PlayerInfoPanel("Castelblanco",100));
-        players.addPlayer(new PlayerInfoPanel("Benavides",200));
+        players.addPlayer(new PlayerInfoPanel("Player 1",10));
+        players.addPlayer(new PlayerInfoPanel("Player 2",20));
+        players.addPlayer(new PlayerInfoPanel("Player 3",100));
+        players.addPlayer(new PlayerInfoPanel("Player 4",200));
         players.buildPanel();
-
+        //Hand
         LettersGroup lg = new ESLettersGroup();
         Dealer ganstaDealer = new Dealer(lg);
         Hand h1 = new Hand();
         ganstaDealer.fillHand(h1);
-        ListenerLetraBoard lb = new ListenerLetraBoard();
-        GraficHand graficHand = new GraficHand(lb);
+        GraficHand graficHand = new GraficHand();
         graficHand.setHand(h1);
         graficHand.addLetters();
         graficHand.addGraficLetterListener();
+        //PlayBuffer
+        PlayBuffer playBuffer = new PlayBuffer(board,graficHand);
+        //BotonesListener
+        ListenerBotones listenerBotones = new ListenerBotones();
+        listenerBotones.setPlayBuffer(playBuffer);
         
+        graficHand.addBotonListener(listenerBotones);
+        board.setPlayBuffer(playBuffer);
         ClientWindow window = new ClientWindow(board, players,graficHand);
         window.getContentPane().setBackground(new Color(153, 51, 51));
         window.buildFrame();

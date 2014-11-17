@@ -55,7 +55,7 @@ public class LettersGroupPanel extends JPanel{
     public void join(){
         grfLetters = new ArrayList<>();
         for(Letter l : lettersGroup.getLetters()){
-            grfLetters.add(new GraficLetter(l));
+            grfLetters.add(new GraficLetter(l,null));
         }
     }
     

@@ -5,6 +5,7 @@
  */
 package vista;
 
+import controlador.PlayBuffer;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Insets;
@@ -17,9 +18,9 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.io.IOException;
-import javax.swing.BorderFactory;
 import javax.swing.border.LineBorder;
 import vista.board.LetterContainer;
+import vista.hand.GraficHand;
 import vista.letras.GraficLetter;
 import vista.window.ClientWindow;
 
@@ -29,10 +30,18 @@ import vista.window.ClientWindow;
  */
 public class LetterContainerTargetListener implements DropTargetListener {
 
+    private PlayBuffer playBuffer;
+
     private final LetterContainer letterContainer;
+    private GraficHand graficHand;
 
     public LetterContainerTargetListener(LetterContainer lc) {
         this.letterContainer = lc;
+    }
+
+    public void setPlayBuffer(PlayBuffer pb) {
+        this.playBuffer = pb;
+        this.graficHand = playBuffer.getGraficHand();
     }
 
     @Override
@@ -94,6 +103,17 @@ public class LetterContainerTargetListener implements DropTargetListener {
 
         letterContainer.setGraficLetter(letraObtenida);
         letterContainer.addLabel();
+
+        playBuffer.addLetter(letraObtenida);
+
+        //Bordes a la normaidad
+        letterContainer.setBorder(new LineBorder(new Color(102, 153, 153)) {
+            @Override
+            public Insets getBorderInsets(Component c, Insets insets) {
+                return new Insets(-5, 10, 10, 10);
+            }
+        });
+
     }
 
 }

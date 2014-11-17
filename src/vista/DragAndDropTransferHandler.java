@@ -36,7 +36,7 @@ public class DragAndDropTransferHandler extends TransferHandler implements DragS
     public int getSourceActions(JComponent c) {
 
         if (c instanceof GraficLetter) {
-            return TransferHandler.MOVE;
+            return TransferHandler.COPY;
         }
 
         return TransferHandler.NONE;

@@ -6,7 +6,6 @@
 package controlador.cliente;
 
 import java.awt.Color;
-import vista.ListenerLetraBoard;
 import vista.hand.GraficHand;
 import vista.window.ClientWindow;
 
@@ -19,13 +18,10 @@ public class Control {
     private final Partida partida;
     private final ClientWindow window;
     private final ClientPlayer player;
-    
-    private final ListenerLetraBoard listenerLetraBoard;
-    
+
     public Control() {
         //Pedir Nombre 
-        listenerLetraBoard = new ListenerLetraBoard();
-        partida = new Partida("Darryl", listenerLetraBoard);
+        partida = new Partida("David");
         partida.initiationProtocol();
         player = partida.getPlayer();
         window = new ClientWindow(partida.getBoard(), partida.getPlayersInfo(), buildHand());

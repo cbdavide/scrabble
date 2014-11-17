@@ -41,8 +41,7 @@ public class GraficHandTest {
             System.out.print(l.getSymbol());
         }
         System.out.println("");
-        ListenerLetraBoard lb = new ListenerLetraBoard();
-        GraficHand graficHand = new GraficHand(lb);
+        GraficHand graficHand = new GraficHand();
         graficHand.setHand(h1);
         graficHand.addLetters();
         frame.add(graficHand);
@@ -52,7 +51,7 @@ public class GraficHandTest {
         graficHand.addLetters();
         graficHand.addGraficLetterListener();
         graficHand.decreaseLettersSize();
-        graficHand.growUpLettersSize();
+        //graficHand.growUpLettersSize();
         
     }
 }

@@ -26,12 +26,12 @@ public class DraggableMouseListener extends MouseAdapter implements Serializable
 
         TransferHandler handler = c.getTransferHandler();
 
-        handler.exportAsDrag(c, e, TransferHandler.MOVE);
+        handler.exportAsDrag(c, e, TransferHandler.COPY);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        System.out.println("Holo");
         JComponent c = (JComponent) e.getSource();
         c.setBorder(BorderFactory.createRaisedBevelBorder());
 

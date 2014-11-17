@@ -5,6 +5,7 @@
  */
 package vista.board;
 
+import controlador.PlayBuffer;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.io.Serializable;
@@ -30,6 +31,14 @@ public class Board extends JPanel implements Serializable{
 
     private void configLayout() {
         setLayout(new GridLayout(ROWS, COLS, 0, 0));
+    }
+    
+    public void setPlayBuffer(PlayBuffer pb){
+        for(int i = 0; i < ROWS; i++){
+            for(int j = 0; j < COLS; j++){
+                boxes[i][j].setPlayBuffer(pb);
+            }
+        }
     }
 
     public void setLetterContainer(LetterContainer[][] boxes) {

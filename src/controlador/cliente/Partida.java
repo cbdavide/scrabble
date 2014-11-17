@@ -30,12 +30,12 @@ public class Partida {
     private boolean isMoving;
 
 
-    public Partida(String name, ListenerLetraBoard lb) {
+    public Partida(String name) {
         cliente = new Cliente();
         player = new ClientPlayer(cliente.getComunications());
         player.setName(name);
         player.setPoint(0);
-        graficHand = new GraficHand(lb);
+        graficHand = new GraficHand();
         this.stillOn = true;
         this.isMoving = true;
     }

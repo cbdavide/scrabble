@@ -17,7 +17,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import vista.letras.GraficLetter;
 import modelo.ImageLoader;
-import vista.ListenerLetraBoard;
+import vista.ListenerBotones;
 
 /**
  *
@@ -29,16 +29,14 @@ public class GraficHand extends JPanel {
     private ArrayList<GraficLetter> letters;
 
     private JButton send;
+    private JButton undo;
 
     private GridBagLayout layout;
     private GridBagConstraints gbc;
 
-    private final ListenerLetraBoard listenerLetraBoard;
-
-    public GraficHand(ListenerLetraBoard listenerLetra) {
-        this.listenerLetraBoard = listenerLetra;
+    public GraficHand() {
         configLayout();
-        configButton();
+        configButtons();
     }
 
     public Hand getLetters() {
@@ -48,35 +46,73 @@ public class GraficHand extends JPanel {
     public void setHand(Hand h) {
         this.hand = h;
     }
+
+    public void removeLetter(GraficLetter gl) {
+        letters.remove(gl);
+    }
+
+    public void addLetter(GraficLetter gl) {
+        letters.add(gl);
+    }
     
-    public void addGraficLetterListener(){
-        for(GraficLetter l : letters){
+    public void addBotonListener(ListenerBotones listener){
+        send.addActionListener(listener);
+        undo.addActionListener(listener);
+    }
+    
+    public void removeBotonListener(ListenerBotones litener){
+        send.addActionListener(litener);
+        undo.addActionListener(litener);
+    }
+
+    public void addGraficLetterListener() {
+        for (GraficLetter l : letters) {
             l.addDraggableMouseListener();
         }
     }
-    
-    public void decreaseLettersSize(){
-        for(GraficLetter l : letters){
+
+    public void decreaseLettersSize() {
+        for (GraficLetter l : letters) {
             l.decreaseLetterSize();
         }
     }
-    
-    public void growUpLettersSize(){
-        for(GraficLetter l : letters){
+
+    public void growUpLettersSize() {
+        for (GraficLetter l : letters) {
             l.growUpLetters();
-        }        
+        }
     }
-    
-    public void removeLetterListener(){
-        for(GraficLetter l : letters){
+
+    public void removeLetterListener() {
+        for (GraficLetter l : letters) {
             l.removeDraggableMouseListener();
         }
     }
 
+    /**
+     * Se utiliza cuando se le quita o se le agrega una letra a la mano por
+     * parte del cliente.
+     */
+    public void updateLetters() {
+        removeAll();
+        addComponent(0,0,1,1,GridBagConstraints.NONE,1.0,1.0,undo);
+        int i = 1;
+        for (GraficLetter gl : letters) {
+            addComponent(i, 0, 1, 1, GridBagConstraints.NONE, 1.0, 1.0, gl);
+            i++;
+        }
+        addComponent(i, 0, 1, 1, GridBagConstraints.NONE, 1.0, 1.0, send);
+        updateUI();
+    }
+
+    /**
+     * Se llama cuando se recibe la mano actualizada por parte del servidor.
+     */
     public void addLetters() {
         removeAll();
         updateGraficLetters();
-        int i = 0;
+        addComponent(0,0,1,1,GridBagConstraints.NONE,1.0,1.0,undo);
+        int i = 1;
         for (GraficLetter l : letters) {
             addComponent(i, 0, 1, 1, GridBagConstraints.NONE, 1.0, 1.0, l);
             i++;
@@ -85,18 +121,27 @@ public class GraficHand extends JPanel {
         updateUI();
     }
 
-    private void configButton() {
+    private void configButtons() {
         ImageLoader imgLoader = new ImageLoader();
         send = new JButton();
         send.setIcon(new ImageIcon(imgLoader.loadImage("/img/cheack.png")));
         send.setPreferredSize(new Dimension(40, 40));
+        send.setActionCommand("send");
         letters = new ArrayList<>();
+        undo = new JButton();
+        undo.setIcon(new ImageIcon(imgLoader.loadImage("/img/undo.png")));
+        undo.setPreferredSize(new Dimension(40,40));
+        undo.setActionCommand("undo");
     }
 
+    /**
+     * Este metodo se utiliza cuando se recibe la mano actualizada por parte del
+     * servidor.
+     */
     private void updateGraficLetters() {
         letters = new ArrayList<>();
         for (Letter l : hand.getetters()) {
-            GraficLetter temp = new GraficLetter(l);
+            GraficLetter temp = new GraficLetter(l,this);
             temp.paintClientLetter();
             letters.add(temp);
 

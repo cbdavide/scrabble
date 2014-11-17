@@ -5,6 +5,7 @@
  */
 package vista.board;
 
+import controlador.PlayBuffer;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -29,16 +30,27 @@ public abstract class LetterContainer extends JPanel implements Serializable{
     protected final int value;
     protected final boolean fullWord;
     
+    protected LetterContainerTargetListener letterContainerTargetListener;
+    
     private GraficLetter letter;
 
     public LetterContainer(int value, boolean fullWord) {
         setPreferredSize(new Dimension(35,35));
+        letterContainerTargetListener = new LetterContainerTargetListener(this);
         setTransferHandler(new DragAndDropTransferHandler());
-        setDropTarget(new DropTarget(LetterContainer.this,new LetterContainerTargetListener(this)));
+        setDropTarget(new DropTarget(LetterContainer.this,letterContainerTargetListener));
         label = new JLabel();
         this.value = value;
         this.fullWord = fullWord;
         configBorder();
+    }
+    
+    public void setPlayBuffer(PlayBuffer pb){
+        this.letterContainerTargetListener.setPlayBuffer(pb);
+    }
+    
+    public void removePlayBuffer(){
+        letterContainerTargetListener.setPlayBuffer(null);
     }
     
     public void setGraficLetter(GraficLetter l){

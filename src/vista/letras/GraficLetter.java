@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package vista.letras;
 
 import java.awt.Color;
@@ -21,6 +22,7 @@ import java.awt.datatransfer.Transferable;
 import java.io.Serializable;
 import vista.DragAndDropTransferHandler;
 import vista.DraggableMouseListener;
+import vista.hand.GraficHand;
 import vista.window.ClientWindow;
 
 /**
@@ -28,7 +30,7 @@ import vista.window.ClientWindow;
  * @author david
  */
 public class GraficLetter extends JPanel implements Transferable, Serializable {
-
+    
     private final Letter letter;
 
     private JLabel charLabel;
@@ -47,9 +49,12 @@ public class GraficLetter extends JPanel implements Transferable, Serializable {
     private GridBagConstraints gbc;
 
     private final DraggableMouseListener draggableListener;
-
-    public GraficLetter(Letter l) {
+    
+    private final GraficHand graficHand;
+    
+    public GraficLetter(Letter l,GraficHand gf) {
         this.letter = l;
+        this.graficHand = gf;
         setPreferredSize(new Dimension(40, 40));
         draggableListener = new DraggableMouseListener();
         setTransferHandler(new DragAndDropTransferHandler());
@@ -63,14 +68,16 @@ public class GraficLetter extends JPanel implements Transferable, Serializable {
         paintLetter();
         addComponents();
         setBorder(BorderFactory.createRaisedBevelBorder());
-    }
+}
     
     public void decreaseLetterSize(){
         setPreferredSize(new Dimension(35,35));
+        charLabel.setFont(new Font("Open Sans Extrabold", Font.BOLD, 15));
     }
     
     public void growUpLetters(){
         setPreferredSize(new Dimension(40,40));
+        charLabel.setFont(CHAR_FONT);
     }
 
     public Letter getLetter() {
@@ -168,6 +175,8 @@ public class GraficLetter extends JPanel implements Transferable, Serializable {
         thisFlavor = ClientWindow.getDataFlavor();
 
         if (thisFlavor != null && df.equals(thisFlavor)) {
+            graficHand.removeLetter(this);
+            graficHand.updateLetters();
             return GraficLetter.this;
         }
 

@@ -25,7 +25,7 @@ public class DragTest {
         Letter l = new Letter();
         l.setSymbol("A");
         l.setValue(1);
-        GraficLetter letter = new GraficLetter(l);
+        GraficLetter letter = new GraficLetter(l,null);
         letter.addDraggableMouseListener();
         //
         LetterContainer lC = new SimpleLetterContainer();
