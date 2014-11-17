@@ -6,14 +6,11 @@
 package test;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import controlador.Dealer;
 import controlador.ESLettersGroup;
 import controlador.Hand;
-import controlador.Letter;
 import controlador.LettersGroup;
 import vista.ListenerLetraBoard;
-import vista.letras.GraficLetter;
 import vista.playerInfo.PlayerInfoGroupPanel;
 import vista.playerInfo.PlayerInfoPanel;
 import vista.board.Board;
@@ -54,6 +51,7 @@ public class ClientWindowTest {
         GraficHand graficHand = new GraficHand(lb);
         graficHand.setHand(h1);
         graficHand.addLetters();
+        graficHand.addGraficLetterListener();
         
         ClientWindow window = new ClientWindow(board, players,graficHand);
         window.getContentPane().setBackground(new Color(153, 51, 51));

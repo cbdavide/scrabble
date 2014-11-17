@@ -51,5 +51,8 @@ public class GraficHandTest {
         graficHand.setHand(h2);
         graficHand.addLetters();
         graficHand.addGraficLetterListener();
+        graficHand.decreaseLettersSize();
+        graficHand.growUpLettersSize();
+        
     }
 }

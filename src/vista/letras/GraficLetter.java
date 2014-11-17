@@ -10,20 +10,24 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.MouseAdapter;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import controlador.Letter;
 import java.awt.Dimension;
-import vista.ListenerLetraBoard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.io.Serializable;
+import vista.DragAndDropTransferHandler;
+import vista.DraggableMouseListener;
+import vista.window.ClientWindow;
 
 /**
  *
  * @author david
  */
-public class GraficLetter extends JPanel {
+public class GraficLetter extends JPanel implements Transferable, Serializable {
 
     private final Letter letter;
 
@@ -42,11 +46,13 @@ public class GraficLetter extends JPanel {
     private GridBagLayout layout;
     private GridBagConstraints gbc;
 
-    private MouseAdapter mouseAdapter;
+    private final DraggableMouseListener draggableListener;
 
     public GraficLetter(Letter l) {
         this.letter = l;
         setPreferredSize(new Dimension(40, 40));
+        draggableListener = new DraggableMouseListener();
+        setTransferHandler(new DragAndDropTransferHandler());
         //Fonts
         CHAR_FONT = new Font("Open Sans Extrabold", Font.BOLD, 18);
         POINT_FONT = new Font("SansSerif", Font.BOLD, 9);
@@ -58,13 +64,13 @@ public class GraficLetter extends JPanel {
         addComponents();
         setBorder(BorderFactory.createRaisedBevelBorder());
     }
-
-    public void addMouseAdapter(ListenerLetraBoard listener) {
-        addMouseListener(listener);
+    
+    public void decreaseLetterSize(){
+        setPreferredSize(new Dimension(35,35));
     }
-
-    public void removeMouseAdapter(ListenerLetraBoard listener) {
-        removeMouseListener(listener);
+    
+    public void growUpLetters(){
+        setPreferredSize(new Dimension(40,40));
     }
 
     public Letter getLetter() {
@@ -132,6 +138,40 @@ public class GraficLetter extends JPanel {
         gbc.weighty = wy;
         layout.setConstraints(component, gbc);
         add(component);
+    }
+
+    public void addDraggableMouseListener() {
+        addMouseListener(draggableListener);
+    }
+
+    public void removeDraggableMouseListener() {
+        removeMouseListener(draggableListener);
+    }
+
+    @Override
+    public DataFlavor[] getTransferDataFlavors() {
+        DataFlavor[] flavors = {null};
+        flavors[0] = ClientWindow.getDataFlavor();
+        return flavors;
+    }
+
+    @Override
+    public boolean isDataFlavorSupported(DataFlavor df) {
+        DataFlavor flavor = ClientWindow.getDataFlavor();
+        return flavor.equals(df);
+    }
+
+    @Override
+    public Object getTransferData(DataFlavor df) {
+        DataFlavor thisFlavor;
+
+        thisFlavor = ClientWindow.getDataFlavor();
+
+        if (thisFlavor != null && df.equals(thisFlavor)) {
+            return GraficLetter.this;
+        }
+
+        return null;
     }
 
 }

@@ -8,11 +8,13 @@ package vista.window;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.datatransfer.DataFlavor;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import vista.playerInfo.PlayerInfoGroupPanel;
 import vista.board.Board;
 import vista.hand.GraficHand;
+import vista.letras.GraficLetter;
 
 /**
  *
@@ -27,7 +29,9 @@ public class ClientWindow extends JFrame {
     private GridBagLayout layout;
     private GridBagConstraints gbc;
 
-    public ClientWindow(Board b, PlayerInfoGroupPanel players,GraficHand hand) {
+    private static DataFlavor dataFlavor = null;
+
+    public ClientWindow(Board b, PlayerInfoGroupPanel players, GraficHand hand) {
         super("Screbble");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         configLayout();
@@ -36,8 +40,16 @@ public class ClientWindow extends JFrame {
         this.panelHand = hand;
         this.setResizable(false);
     }
-    
-    public void setPanelHand(GraficHand ph){
+
+    public static DataFlavor getDataFlavor() {
+
+        if (dataFlavor == null) {
+                dataFlavor = new DataFlavor(GraficLetter.class,"GraficLetter");
+        }
+        return dataFlavor;
+    }
+
+    public void setPanelHand(GraficHand ph) {
         this.panelHand = ph;
     }
 
@@ -46,14 +58,14 @@ public class ClientWindow extends JFrame {
         gbc = new GridBagConstraints();
         setLayout(layout);
     }
-    
-    public void buildFrame(){
-        gbc.insets = new Insets(35,20,5,0);
-        addComponent(0,0,1,2,GridBagConstraints.NONE,1.0,1.0,board);
-        gbc.insets = new Insets(0,35,10,0);
-        addComponent(0,2,1,1,GridBagConstraints.NONE,1.0,1.0,panelHand);
-        gbc.insets = new Insets(0,0,0,0);
-        addComponent(1,1,1,1,GridBagConstraints.NONE,0.3,0.2,players);
+
+    public void buildFrame() {
+        gbc.insets = new Insets(35, 20, 5, 0);
+        addComponent(0, 0, 1, 2, GridBagConstraints.NONE, 1.0, 1.0, board);
+        gbc.insets = new Insets(0, 35, 10, 0);
+        addComponent(0, 2, 1, 1, GridBagConstraints.NONE, 1.0, 1.0, panelHand);
+        gbc.insets = new Insets(0, 0, 0, 0);
+        addComponent(1, 1, 1, 1, GridBagConstraints.NONE, 0.3, 0.2, players);
     }
 
     private void addComponent(int x, int y, int w, int h, int fill,

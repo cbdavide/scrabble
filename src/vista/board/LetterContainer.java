@@ -9,10 +9,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Insets;
+import java.awt.dnd.DropTarget;
 import java.io.Serializable;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+import vista.DragAndDropTransferHandler;
+import vista.LetterContainerTargetListener;
 import vista.ListenerLetraBoard;
 import vista.letras.GraficLetter;
 
@@ -30,6 +33,8 @@ public abstract class LetterContainer extends JPanel implements Serializable{
 
     public LetterContainer(int value, boolean fullWord) {
         setPreferredSize(new Dimension(35,35));
+        setTransferHandler(new DragAndDropTransferHandler());
+        setDropTarget(new DropTarget(LetterContainer.this,new LetterContainerTargetListener(this)));
         label = new JLabel();
         this.value = value;
         this.fullWord = fullWord;
@@ -57,7 +62,7 @@ public abstract class LetterContainer extends JPanel implements Serializable{
         return this.fullWord;
     }
 
-    protected void addLabel() {
+    public void addLabel() {
         removeAll();
         if(letter == null)
             add(label);

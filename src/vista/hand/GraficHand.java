@@ -51,13 +51,25 @@ public class GraficHand extends JPanel {
     
     public void addGraficLetterListener(){
         for(GraficLetter l : letters){
-            l.addMouseAdapter(listenerLetraBoard);
+            l.addDraggableMouseListener();
         }
+    }
+    
+    public void decreaseLettersSize(){
+        for(GraficLetter l : letters){
+            l.decreaseLetterSize();
+        }
+    }
+    
+    public void growUpLettersSize(){
+        for(GraficLetter l : letters){
+            l.growUpLetters();
+        }        
     }
     
     public void removeLetterListener(){
         for(GraficLetter l : letters){
-            l.removeMouseAdapter(listenerLetraBoard);
+            l.removeDraggableMouseListener();
         }
     }
 
