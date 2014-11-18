@@ -175,7 +175,7 @@ public class GraficLetter extends JPanel implements Transferable, Serializable {
         thisFlavor = ClientWindow.getDataFlavor();
 
         if (thisFlavor != null && df.equals(thisFlavor)) {
-            graficHand.removeLetter(this);
+            graficHand.removeLetter(GraficLetter.this);
             graficHand.updateLetters();
             return GraficLetter.this;
         }

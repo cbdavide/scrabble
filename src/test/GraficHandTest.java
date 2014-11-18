@@ -11,7 +11,6 @@ import controlador.ESLettersGroup;
 import controlador.Hand;
 import controlador.Letter;
 import controlador.LettersGroup;
-import vista.ListenerLetraBoard;
 import vista.hand.GraficHand;
 
 /**

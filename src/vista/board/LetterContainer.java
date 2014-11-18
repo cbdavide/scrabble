@@ -56,6 +56,10 @@ public abstract class LetterContainer extends JPanel implements Serializable{
     public void setGraficLetter(GraficLetter l){
         this.letter = l;
     }
+    
+    public GraficLetter getGraficLetter(){
+        return this.letter;
+    }
 
     private void configBorder() {
         setBorder(new LineBorder(new Color(102,153,153)) {

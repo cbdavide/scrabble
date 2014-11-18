@@ -51,16 +51,12 @@ public class GraficHand extends JPanel {
         letters.remove(gl);
     }
 
-    public void addLetter(GraficLetter gl) {
-        letters.add(gl);
-    }
-    
-    public void addBotonListener(ListenerBotones listener){
+    public void addBotonListener(ListenerBotones listener) {
         send.addActionListener(listener);
         undo.addActionListener(listener);
     }
-    
-    public void removeBotonListener(ListenerBotones litener){
+
+    public void removeBotonListener(ListenerBotones litener) {
         send.addActionListener(litener);
         undo.addActionListener(litener);
     }
@@ -95,7 +91,7 @@ public class GraficHand extends JPanel {
      */
     public void updateLetters() {
         removeAll();
-        addComponent(0,0,1,1,GridBagConstraints.NONE,1.0,1.0,undo);
+        addComponent(0, 0, 1, 1, GridBagConstraints.NONE, 1.0, 1.0, undo);
         int i = 1;
         for (GraficLetter gl : letters) {
             addComponent(i, 0, 1, 1, GridBagConstraints.NONE, 1.0, 1.0, gl);
@@ -111,7 +107,7 @@ public class GraficHand extends JPanel {
     public void addLetters() {
         removeAll();
         updateGraficLetters();
-        addComponent(0,0,1,1,GridBagConstraints.NONE,1.0,1.0,undo);
+        addComponent(0, 0, 1, 1, GridBagConstraints.NONE, 1.0, 1.0, undo);
         int i = 1;
         for (GraficLetter l : letters) {
             addComponent(i, 0, 1, 1, GridBagConstraints.NONE, 1.0, 1.0, l);
@@ -130,7 +126,7 @@ public class GraficHand extends JPanel {
         letters = new ArrayList<>();
         undo = new JButton();
         undo.setIcon(new ImageIcon(imgLoader.loadImage("/img/undo.png")));
-        undo.setPreferredSize(new Dimension(40,40));
+        undo.setPreferredSize(new Dimension(40, 40));
         undo.setActionCommand("undo");
     }
 
@@ -141,7 +137,7 @@ public class GraficHand extends JPanel {
     private void updateGraficLetters() {
         letters = new ArrayList<>();
         for (Letter l : hand.getetters()) {
-            GraficLetter temp = new GraficLetter(l,this);
+            GraficLetter temp = new GraficLetter(l, this);
             temp.paintClientLetter();
             letters.add(temp);
 

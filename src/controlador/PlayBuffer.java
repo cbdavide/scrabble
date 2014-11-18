@@ -44,12 +44,11 @@ public class PlayBuffer {
     
     public void returnLetters(){
         for(GraficLetter gl : newLetters){
-            gl.growUpLetters();
-            gl.addDraggableMouseListener();
-            graficHand.addLetter(gl);
+            board.removeLetter(gl);
         }
         newLetters.removeAll(newLetters);
-        graficHand.updateLetters();
+        graficHand.addLetters();
+        graficHand.addGraficLetterListener();
     }
     
 }

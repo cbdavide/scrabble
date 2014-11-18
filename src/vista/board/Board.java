@@ -11,12 +11,13 @@ import java.awt.GridLayout;
 import java.io.Serializable;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import vista.letras.GraficLetter;
 
 /**
  *
  * @author david
  */
-public class Board extends JPanel implements Serializable{
+public class Board extends JPanel implements Serializable {
 
     private LetterContainer[][] boxes;
 
@@ -32,11 +33,23 @@ public class Board extends JPanel implements Serializable{
     private void configLayout() {
         setLayout(new GridLayout(ROWS, COLS, 0, 0));
     }
-    
-    public void setPlayBuffer(PlayBuffer pb){
-        for(int i = 0; i < ROWS; i++){
-            for(int j = 0; j < COLS; j++){
+
+    public void setPlayBuffer(PlayBuffer pb) {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
                 boxes[i][j].setPlayBuffer(pb);
+            }
+        }
+    }
+
+    public void removeLetter(GraficLetter gl) {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                if(boxes[i][j].getGraficLetter() == gl){
+                    boxes[i][j].setGraficLetter(null);
+                    boxes[i][j].addLabel();
+                    break;
+                }
             }
         }
     }
