@@ -28,6 +28,7 @@ public class ListenerBotones implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         switch (ae.getActionCommand()) {
             case "send":
+                playBuffer.armarPalabra();
                 break;
             case "undo":
                 playBuffer.returnLetters();
