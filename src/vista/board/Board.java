@@ -9,7 +9,6 @@ import controlador.PlayBuffer;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.io.Serializable;
-import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import vista.letras.GraficLetter;

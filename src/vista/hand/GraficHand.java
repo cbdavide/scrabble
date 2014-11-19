@@ -10,6 +10,7 @@ import controlador.Letter;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,7 +24,7 @@ import vista.ListenerBotones;
  *
  * @author david
  */
-public class GraficHand extends JPanel {
+public class GraficHand extends JPanel implements Serializable{
 
     private Hand hand;
     private ArrayList<GraficLetter> letters;
@@ -57,8 +58,8 @@ public class GraficHand extends JPanel {
     }
 
     public void removeBotonListener(ListenerBotones litener) {
-        send.addActionListener(litener);
-        undo.addActionListener(litener);
+        send.removeActionListener(litener);
+        undo.removeActionListener(litener);
     }
 
     public void addGraficLetterListener() {

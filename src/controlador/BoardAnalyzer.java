@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import vista.board.Board;
 import vista.board.LetterContainer;
@@ -14,7 +15,7 @@ import vista.letras.GraficLetter;
  *
  * @author david
  */
-public class BoardAnalyzer {
+public class BoardAnalyzer implements Serializable{
 
     private final Board board;
 

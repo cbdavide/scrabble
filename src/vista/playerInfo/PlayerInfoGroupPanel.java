@@ -36,6 +36,12 @@ public class PlayerInfoGroupPanel extends JPanel implements Serializable{
         players.get(i).setState(b);
     }
     
+    public void turnOffPlayers(){
+        for(PlayerInfoPanel p : players){
+            p.setState(false);
+        }
+    }
+    
     public void setPlayerInfoPoint(int i, int p){
         players.get(i).setPoints(p);
     }

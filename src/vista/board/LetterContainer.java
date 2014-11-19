@@ -17,7 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import vista.DragAndDropTransferHandler;
 import vista.LetterContainerTargetListener;
-import vista.ListenerLetraBoard;
 import vista.letras.GraficLetter;
 
 /**
@@ -85,14 +84,6 @@ public abstract class LetterContainer extends JPanel implements Serializable{
         else
             add(letter);
         updateUI();
-    }
-    
-    public void addMouseAdapter(ListenerLetraBoard listener){
-        addMouseListener(listener);
-    }
-    
-    public void removeMouseAdapter(ListenerLetraBoard listener){
-        removeMouseListener(listener);
     }
 
     protected abstract void setLabelBackground();

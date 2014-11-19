@@ -18,6 +18,7 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.io.IOException;
+import java.io.Serializable;
 import javax.swing.border.LineBorder;
 import vista.board.LetterContainer;
 import vista.hand.GraficHand;
@@ -28,7 +29,7 @@ import vista.window.ClientWindow;
  *
  * @author david
  */
-public class LetterContainerTargetListener implements DropTargetListener {
+public class LetterContainerTargetListener implements DropTargetListener, Serializable {
 
     private PlayBuffer playBuffer;
 

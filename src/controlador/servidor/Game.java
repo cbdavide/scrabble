@@ -50,10 +50,8 @@ public class Game {
     }
 
     private void turno() {
-        if (turn < players.toArray().length) {
-            if (turn != 0) {
+        if (turn < (players.toArray().length-1)) {
                 turn++;
-            }
         } else {
             turn = 0;
         }
@@ -77,6 +75,7 @@ public class Game {
 
     public void gameLoopProtocol() {
         while (gameStillOn) {
+            System.out.println(turn);
             turno();
             //Notificar a que usuario le toca jugar
             for (ServerPlayer player : players) {
@@ -86,23 +85,36 @@ public class Game {
                 } else {
                     player.sendBoolean(false);
                 }
+                System.out.println(turn);
                 player.sendInt(turn);
             }
             //Sera falsa cuando el jugador termine la jugada
             boolean cond_temp = true;
             ServerPlayer actualPlayer = players.get(turn);
             while (cond_temp) {
-                String word = actualPlayer.askWord();
+                String word = actualPlayer.readString();
+                int puntos = actualPlayer.readInt();
                 //Verificar que la palabra existe
                 boolean wordExist = verificador.verify(word);
                 //Enviar resultado
                 actualPlayer.sendResponse(wordExist);
-
-                cond_temp = actualPlayer.readBoolean();
+                
+                if(wordExist){
+                    cond_temp = false;
+                }
+                
+                
             }
-
-            this.board = actualPlayer.askBoard();
-
+            System.out.println("");
+            System.out.println("HELLO");
+            actualPlayer.askHand();
+            System.out.println("HELLO2");
+            dealer.fillHand(actualPlayer.getHand());
+            System.out.println("HELLO3");
+            actualPlayer.sendHand();
+            System.out.println("HELLO4");
+            //this.board = actualPlayer.askBoard();
+            System.out.println("HELLO5");
         }
     }
     //Mescla los jugadores aleatoriamente

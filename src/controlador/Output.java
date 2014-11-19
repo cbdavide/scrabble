@@ -66,6 +66,7 @@ public class Output {
             oos.flush();
         } catch (IOException e) {
             Consola.consola("Problema al enviar la board ¬¬");
+            e.printStackTrace();
         }
     }
 

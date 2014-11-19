@@ -54,6 +54,10 @@ public abstract class Player {
     public void askHand() {
         this.hand = input.readHand();
     }
+    
+    public Hand readHand(){
+        return input.readHand();
+    }
 
     public boolean getState() {
         return this.state;

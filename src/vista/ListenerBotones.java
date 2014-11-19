@@ -6,6 +6,7 @@
 package vista;
 
 import controlador.PlayBuffer;
+import controlador.cliente.ClientPlayer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,6 +17,7 @@ import java.awt.event.ActionListener;
 public class ListenerBotones implements ActionListener {
 
     private PlayBuffer playBuffer;
+    private ClientPlayer player;
 
     public ListenerBotones() {
     }
@@ -23,12 +25,20 @@ public class ListenerBotones implements ActionListener {
     public void setPlayBuffer(PlayBuffer playBuffer){
         this.playBuffer = playBuffer;
     }
+    
+    public void setPlayer(ClientPlayer player){
+        this.player = player;
+    }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
         switch (ae.getActionCommand()) {
             case "send":
-                playBuffer.armarPalabra();
+                Object[] respuesta = playBuffer.armarPalabra();
+                String palabra = (String)respuesta[0];
+                int puntaje = (Integer)respuesta[1];
+                player.sendWord(palabra);
+                player.sendInt(puntaje);
                 break;
             case "undo":
                 playBuffer.returnLetters();

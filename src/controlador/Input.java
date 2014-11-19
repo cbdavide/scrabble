@@ -68,6 +68,7 @@ public class Input {
             return (Hand) ois.readObject();
         } catch (IOException ex) {
             Consola.consola("Trouble readind a hand!!");
+            ex.printStackTrace();
             return null;
         } catch (ClassNotFoundException ex) {
             Consola.consola("Class not found ¬¬");

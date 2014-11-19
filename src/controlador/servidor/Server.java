@@ -33,7 +33,7 @@ public class Server {
         players = new ArrayList<>();
         crearSocket();
         escuchar();
-        closeSocket();
+        //closeSocket();
     }
     
     public final ArrayList<PlayerComunications> getPLayers(){

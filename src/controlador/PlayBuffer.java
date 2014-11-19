@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import vista.board.Board;
 import vista.board.LetterContainer;
@@ -15,7 +16,7 @@ import vista.letras.GraficLetter;
  *
  * @author david
  */
-public class PlayBuffer {
+public class PlayBuffer implements Serializable{
 
     private final ArrayList<GraficLetter> newLetters;
     private ArrayList<GraficLetter> palabra;
