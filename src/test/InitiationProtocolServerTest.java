@@ -38,13 +38,13 @@ public class InitiationProtocolServerTest {
         int nJugadores = 2;
         Game g = new Game(nJugadores, lg,board,diccionario);
         g.initiationProtocol();
-        for (Letter l : lg.getLetters()) {
+        /*for (Letter l : lg.getLetters()) {
             if (l.isOn()) {
                 System.out.print(l.getSymbol() + " ");
             } else {
                 System.out.print("- ");
             }
-        }
+        }*/
         g.gameLoopProtocol();
     }
 }

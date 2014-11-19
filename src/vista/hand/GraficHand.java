@@ -24,7 +24,7 @@ import vista.ListenerBotones;
  *
  * @author david
  */
-public class GraficHand extends JPanel implements Serializable{
+public class GraficHand extends JPanel implements Serializable {
 
     private Hand hand;
     private ArrayList<GraficLetter> letters;
@@ -40,12 +40,24 @@ public class GraficHand extends JPanel implements Serializable{
         configButtons();
     }
 
-    public Hand getLetters() {
+    public Hand getHand() {
         return this.hand;
     }
 
     public void setHand(Hand h) {
         this.hand = h;
+    }
+
+    public void removeCoreLetters() {
+        ArrayList<Letter> temp = new ArrayList<>();
+        int i = 0;
+        for (GraficLetter gl : letters) {
+            if (gl.getLetter() == hand.getLetter(i)) {
+                temp.add(hand.getLetter(i));
+            }
+            i++;
+        }
+        this.hand.setLetters(temp);
     }
 
     public void removeLetter(GraficLetter gl) {

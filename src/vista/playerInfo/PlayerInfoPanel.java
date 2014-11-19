@@ -45,6 +45,10 @@ public class PlayerInfoPanel extends JPanel implements Serializable{
         addLabels();
         isOn = false;
     }
+    
+    public int getPoints(){
+        return Integer.parseInt(points.getText());
+    }
 
     public void setState(boolean b) {
         this.isOn = b;

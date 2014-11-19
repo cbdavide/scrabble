@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import vista.Consola;
 import vista.board.Board;
+import vista.board.LetterContainer;
 import vista.playerInfo.PlayerInfoGroupPanel;
 
 /**
@@ -76,11 +77,25 @@ public class Input {
         }
     }
 
+    public LetterContainer[][] readLetterContainer() {
+        try {
+            return (LetterContainer[][]) ois.readObject();
+        } catch (IOException ex) {
+            Consola.consola("Trouble readind letterCOntainer!");
+            ex.printStackTrace();
+            return null;
+        } catch (ClassNotFoundException ex) {
+            Consola.consola("Class not found ¬¬");
+            return null;
+        }
+    }
+
     public Board readBoard() {
         try {
             return (Board) ois.readObject();
         } catch (IOException ex) {
             Consola.consola("Trouble readind the board!");
+            ex.printStackTrace();
             return null;
         } catch (ClassNotFoundException ex) {
             Consola.consola("Class not found ¬¬");

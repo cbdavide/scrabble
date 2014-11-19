@@ -30,6 +30,14 @@ public class Board extends JPanel implements Serializable {
         setBorder(BorderFactory.createLineBorder(new Color(02, 153, 153), 3));
     }
 
+    public void updateBoxes() {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                boxes[i][j].addLabel();
+            }
+        }
+    }
+
     private void configLayout() {
         setLayout(new GridLayout(ROWS, COLS, 0, 0));
     }
@@ -38,6 +46,14 @@ public class Board extends JPanel implements Serializable {
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 boxes[i][j].setPlayBuffer(pb);
+            }
+        }
+    }
+
+    public void removePlayBuffer() {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                boxes[i][j].removePlayBuffer();
             }
         }
     }
@@ -67,14 +83,17 @@ public class Board extends JPanel implements Serializable {
     }
 
     public void addBoxes() {
+        removeAll();
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 add(boxes[i][j]);
             }
         }
+        updateUI();
     }
 
     public void updateBoard() {
+        this.repaint();
         updateUI();
     }
 

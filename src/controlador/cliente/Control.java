@@ -21,7 +21,7 @@ public class Control {
 
     public Control() {
         //Pedir Nombre 
-        partida = new Partida("David");
+        partida = new Partida("Player1");
         partida.initiationProtocol();
         player = partida.getPlayer();
         window = new ClientWindow(partida.getBoard(), partida.getPlayersInfo(), buildHand());

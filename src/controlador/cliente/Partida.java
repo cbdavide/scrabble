@@ -7,10 +7,14 @@ package controlador.cliente;
 
 import controlador.Hand;
 import controlador.PlayBuffer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import vista.ListenerBotones;
 import vista.board.Board;
 import vista.hand.GraficHand;
+import vista.letras.GraficLetter;
 import vista.playerInfo.PlayerInfoGroupPanel;
+import vista.playerInfo.PlayerInfoPanel;
 
 /**
  *
@@ -84,53 +88,56 @@ public class Partida {
     }
 
     public void gameLoopProtocol() {
-
+        int elegido = -1;
+        boolean turn;
+        boolean move;
+        PlayerInfoPanel playerInfo;
+        PlayBuffer playBuffer;
         while (stillOn) {
-
-            boolean isMyTurn = player.readBoolean();
-            int xx = player.readInt();
-            System.out.println(xx);
-            //Ilumina casilla de el legido
-            //playersInfo.turnOffPlayers();
-            System.out.println(xx);
-            playersInfo.setPlayerInfoState(xx, true);
-
-            if (isMyTurn) {
-                System.out.println("My turn");
-                //Añadir listener a la mano
+            turn = player.readBoolean();
+            elegido = player.readInt();
+            playersInfo.turnOffPlayers();
+            playerInfo = playersInfo.getPlayerInfo(elegido);
+            playerInfo.setState(true);
+            if (turn) {
                 graficHand.addGraficLetterListener();
-                //Buffer de jugada
-                PlayBuffer playBuffer = new PlayBuffer(board, graficHand);
-                //Configurar listenerBotones
-                listenerBotones.setPlayBuffer(playBuffer);
+                playBuffer = new PlayBuffer(board, graficHand);
                 listenerBotones.setPlayer(player);
+                listenerBotones.setPlayBuffer(playBuffer);
                 graficHand.addBotonListener(listenerBotones);
                 board.setPlayBuffer(playBuffer);
-                while (isMoving) {
-                    //La palabra se enviaria desde otra parte
-                    boolean answer = player.getResponse();
-                    System.out.println(answer);
-
-                    if (answer) {
-                        isMoving = false;
-                    }
-
+                move = true;
+                while (move) {
+                    System.out.println("Here");
+                    move = !player.readBoolean();
+                    System.out.println(move);
                 }
-                player.sendHand();
-                //player.askHand();
+                //board.removePlayBuffer();
+                graficHand.removeBotonListener(listenerBotones);
+                graficHand.removeLetterListener();
+                graficHand.removeCoreLetters();
+                //Enviar mano, recargarla, recibirla, actualizarla
+                player.sendHand(graficHand.getHand());
                 Hand h = player.readHand();
                 graficHand.setHand(h);
                 graficHand.addLetters();
-                //Enviar Board actualizada
-                //player.sendBoard(this.board);
-                graficHand.removeBotonListener(listenerBotones);
-                graficHand.removeLetterListener();
-                System.out.println("End of My turn");
-
-            } else {
-                System.out.println("Not My turn");
+                //Enviar tablero
+                player.sendLetterContainer(board.getBoxes());
             }
-
+            this.board.setLetterContainer(player.readLetterContainer());
+            board.addBoxes();
+            /*GraficLetter temporali = board.getBox(7, 7).getGraficLetter();
+            System.out.println(temporali.getLetter().getSymbol());
+            System.out.println("Recibido");*/
+            /*try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Partida.class.getName()).log(Level.SEVERE, null, ex);
+            }*/
+            int temp_pla = player.readInt();
+            int point = player.readInt();
+            point += playersInfo.getPlayerInfoPoints(temp_pla);
+            playersInfo.setPlayerInfoPoint(temp_pla, point);
         }
 
     }

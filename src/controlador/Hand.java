@@ -20,6 +20,10 @@ public class Hand implements Serializable {
     public Hand() {
         letters = new ArrayList<>();
     }
+    
+    public void setLetters(ArrayList<Letter> l){
+        this.letters = l;
+    }
 
     public boolean addLetter(Letter l) {
 

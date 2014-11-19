@@ -6,6 +6,7 @@
 package controlador;
 
 import vista.board.Board;
+import vista.board.LetterContainer;
 import vista.playerInfo.PlayerInfoGroupPanel;
 
 /**
@@ -54,9 +55,13 @@ public abstract class Player {
     public void askHand() {
         this.hand = input.readHand();
     }
-    
-    public Hand readHand(){
+
+    public Hand readHand() {
         return input.readHand();
+    }
+
+    public void sendHand(Hand h) {
+        output.writeHand(h);
     }
 
     public boolean getState() {
@@ -97,6 +102,14 @@ public abstract class Player {
 
     public void sendPlayersInfo(PlayerInfoGroupPanel playersInfo) {
         output.writePlayersInfo(playersInfo);
+    }
+
+    public void sendLetterContainer(LetterContainer[][] c) {
+        output.writeLetterContainer(c);
+    }
+    
+    public LetterContainer[][] readLetterContainer(){
+        return input.readLetterContainer();
     }
 
     public Board askBoard() {

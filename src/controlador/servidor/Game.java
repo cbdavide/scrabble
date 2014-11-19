@@ -8,6 +8,7 @@ package controlador.servidor;
 import java.util.ArrayList;
 import java.util.Collections;
 import controlador.Dealer;
+import controlador.Hand;
 import controlador.LettersGroup;
 import modelo.Diccionario;
 import controlador.Verificador;
@@ -44,14 +45,14 @@ public class Game {
         playersInfo = new PlayersInfoManager();
         gameStillOn = true;
     }
-    
-    public ArrayList<ServerPlayer> getPlayers(){
+
+    public ArrayList<ServerPlayer> getPlayers() {
         return this.getPlayers();
     }
 
     private void turno() {
-        if (turn < (players.toArray().length-1)) {
-                turn++;
+        if (turn < (players.toArray().length - 1)) {
+            turn++;
         } else {
             turn = 0;
         }
@@ -74,49 +75,50 @@ public class Game {
     }
 
     public void gameLoopProtocol() {
+        boolean move;
+        ServerPlayer actualPlayer;
         while (gameStillOn) {
-            System.out.println(turn);
             turno();
-            //Notificar a que usuario le toca jugar
-            for (ServerPlayer player : players) {
-
-                if (players.indexOf(player) == turn) {
-                    player.sendBoolean(true);
+            //System.out.println(turn);
+            for (ServerPlayer p : players) {
+                if (players.indexOf(p) == turn) {
+                    p.sendBoolean(true);
                 } else {
-                    player.sendBoolean(false);
+                    p.sendBoolean(false);
                 }
                 System.out.println(turn);
-                player.sendInt(turn);
+                p.sendInt(turn);
             }
-            //Sera falsa cuando el jugador termine la jugada
-            boolean cond_temp = true;
-            ServerPlayer actualPlayer = players.get(turn);
-            while (cond_temp) {
+            move = true;
+            int puntos = 0;
+            actualPlayer = players.get(turn);
+            while (move) {
                 String word = actualPlayer.readString();
-                int puntos = actualPlayer.readInt();
-                //Verificar que la palabra existe
-                boolean wordExist = verificador.verify(word);
-                //Enviar resultado
-                actualPlayer.sendResponse(wordExist);
-                
-                if(wordExist){
-                    cond_temp = false;
+                puntos = actualPlayer.readInt();
+                boolean isWord = verificador.verify(word);
+                actualPlayer.sendBoolean(isWord);
+                //move = false;
+                if (isWord) {
+                    move = false;
                 }
-                
-                
             }
-            System.out.println("");
-            System.out.println("HELLO");
-            actualPlayer.askHand();
-            System.out.println("HELLO2");
-            dealer.fillHand(actualPlayer.getHand());
-            System.out.println("HELLO3");
-            actualPlayer.sendHand();
-            System.out.println("HELLO4");
-            //this.board = actualPlayer.askBoard();
-            System.out.println("HELLO5");
+            Hand h = actualPlayer.readHand();
+            dealer.fillHand(h);
+            actualPlayer.sendHand(h);
+            board.setLetterContainer(actualPlayer.readLetterContainer());
+            board.addBoxes();
+            //Send it to every body
+            for (ServerPlayer p : players) {
+                p.sendLetterContainer(board.getBoxes());
+                p.sendInt(turn);
+                p.sendInt(puntos);
+            }
+            
+            
         }
+
     }
+
     //Mescla los jugadores aleatoriamente
     private ArrayList<PlayerComunications> shufflePlayers() {
         ArrayList<PlayerComunications> comunications = server.getPLayers();
@@ -144,16 +146,16 @@ public class Game {
             p.askPoint();
         }
     }
-    
-    private void buildPlayersInfo(){
-        for(ServerPlayer p : players){
+
+    private void buildPlayersInfo() {
+        for (ServerPlayer p : players) {
             playersInfo.addPlayer(p.getName(), p.getPoint());
         }
         playersInfo.buildPanel();
     }
 
     private void sendPlayersInfo() {
-        for(ServerPlayer p : players){
+        for (ServerPlayer p : players) {
             p.sendPlayersInfo(playersInfo.getPlayersInfo());
         }
     }

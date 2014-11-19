@@ -6,11 +6,13 @@
 
 package test;
 
+import controlador.Letter;
 import javax.swing.JFrame;
 import vista.board.Board;
 import vista.board.BoardBuilder;
 import vista.board.BoardDirector;
 import vista.board.ClassicBoardBuilder;
+import vista.letras.GraficLetter;
 
 /**
  *
@@ -32,6 +34,15 @@ public class ClassicBoardTest {
         frame.add(board);
         frame.pack();
         frame.setVisible(true);
+        Board b2 = new Board();
+        BoardBuilder builder2 = new ClassicBoardBuilder();
+        BoardDirector director2 = new BoardDirector(builder2);
+        board.setLetterContainer(director2.getLetterContainers());
+        board.addBoxes();
+        Letter l = new Letter();
+        l.setSymbol("A");
+        l.setValue(5);
+        //board.getBox(7, 7).setGraficLetter(new GraficLetter(l));
     }
     
 }
