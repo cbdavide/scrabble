@@ -1,4 +1,1 @@
-scrabble
-========
-
-Srabble Game
+Archivo README
