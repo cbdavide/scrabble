@@ -1,2 +1,3 @@
 Archivo README
-Linea segunda.
+Segunda linea.
+
